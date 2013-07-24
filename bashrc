@@ -16,7 +16,10 @@ alias ldir="ls -l|grep ^d"
 alias mnt="mount|column -t"
 alias rm="rm -i"
 alias pcp="perl /home/ravi/workspace/linux-next/scripts/checkpatch.pl"
+alias utc="TZ='UTC' date"
 
 export PATH=$PATH:"/home/ravi/bin"
 export EDITOR=vim
 
+ulimit -c unlimited
+shopt -s cdspell
