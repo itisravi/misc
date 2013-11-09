@@ -18,7 +18,7 @@ find . -name '*.c' >cscope.files
 find . -name '*.cpp' >>cscope.files
 find . -name '*.h' >>cscope.files
 find . -name '*.javac' >>cscope.files
-ctags -L cscope.files
+ctags -L cscope.files --extra=f
 cscope -Rbkq
 echo "Done building database. Run cscope -d."
 echo ""
