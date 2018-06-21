@@ -1,0 +1,12 @@
+1.Create list.x. This is called the Interface Definition Language (IDL)
+2. rpcgen list.x
+This produces:
+    list.h: Actual declarations in C, based on your .x file.
+    list_svc.c: Implements main() for the server. Handles listening for incoming RPCs and dispatching control appropriately.
+    list_xdr.c: Code to convert your data structures for network transmission.
+    list_clnt.c: Functions the client can call to issue RPCs. 
+3.Write server code list_svc_proc.c for server procedures declared  in list.h
+4.Write client code list_clnt_proc.c for client procedures declared in list.h
+5. Compile using makefile/ whatever.
+6. start server: ./list_svc
+7. run client: ./list_clnt localhost

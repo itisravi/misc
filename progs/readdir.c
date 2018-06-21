@@ -1,0 +1,55 @@
+#include <dirent.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+
+static void
+ /* List all files in directory 'dirPath' */
+listFiles (const char *dirpath)
+{
+        DIR *dirp;
+        struct dirent *dp;
+        int isCurrent;
+        /* True if 'dirpath' is "." */
+        isCurrent = strcmp (dirpath, ".") == 0;
+        dirp = opendir (dirpath);
+        if (dirp == NULL)
+        {
+                perror ("opendir failed on ");
+               return;
+        }
+
+       /* For each entry in this directory, print directory + filename */
+       for (;;)
+      {
+         errno = 0;
+         dp = readdir (dirp);
+         if (dp == NULL)
+        	break;
+         /* To distinguish error from end-of-directory */
+        if (strcmp (dp->d_name, ".") == 0 || strcmp (dp->d_name, "..") == 0)
+	        continue;
+              /* Skip . and .. */
+        if (!isCurrent)
+            printf ("%s/", dirpath);
+        printf ("%s\n", dp->d_name);
+      }       
+      if (errno != 0)
+        perror ("readdir");
+      if (closedir (dirp) == -1)
+        perror ("closedir");
+}
+int
+main (int argc, char *argv[])
+{
+  if (argc > 1 && strcmp (argv[1], "--help") == 0)
+    return 0;
+  if (argc == 1)
+    listFiles (".");
+/* No arguments - use current directory */
+  else
+    for (argv++; *argv; argv++)
+      listFiles (*argv);
+  exit (EXIT_SUCCESS);
+}
