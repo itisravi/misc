@@ -7,6 +7,7 @@ set ls=2
 set incsearch
 set formatoptions+=w
 set tw=80
+set colorcolumn=80
 map <F2> : set number!<CR>
 map <F3> : TlistToggle<CR>
 map <F4> : set nowrap!<CR>
@@ -33,3 +34,13 @@ endfunction
 nnoremap <silent> n   n:call HLNext(0.4)<cr>
 nnoremap <silent> N   N:call HLNext(0.4)<cr>
 "</Instantly better Vim- Conway>"
+
+fun! ShowFuncName()
+  let lnum = line(".")
+  let col = col(".")
+  echohl ModeMsg
+  echo getline(search("^[^ \t#/]\\{2}.*[^:]\s*$", 'bW'))
+  echohl None
+  call search("\\%" . lnum . "l" . "\\%" . col . "c")
+endfun
+map f :call ShowFuncName() <CR>
